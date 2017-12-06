@@ -1,0 +1,8 @@
+<div class="row">
+ <h1>PARTIDOS:</h1>
+  <a *ngFor="let partido of partidos.results" [routerLink]="['/detail', partido._id]" >
+    <div class="col-md-3 col-sd-12">
+      <p>{{partido._id}}</p>
+    </div>
+  </a>
+</div>

@@ -1,0 +1,12 @@
+h1{
+  text-align: center;
+  margin-bottom: 30px;
+}
+a{
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+p{
+  font-size: medium;
+  background-color: rgb(205, 205, 205);
+}
