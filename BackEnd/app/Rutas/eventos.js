@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var ObjectId = require('mongoose').ObjectID;
 var router = require('express').Router();
 var bodyParser = require('body-parser');
 var Evento = mongoose.model('evento');
