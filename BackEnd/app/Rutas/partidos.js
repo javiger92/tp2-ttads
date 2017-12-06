@@ -37,11 +37,9 @@ router.post('/', (req, res) => {
 //UPDATE PARTIDO
 router.put('/:_id', (req, res) => {
   let _id = req.params._id;
-  let equipos = req.body.equipos;
-  let eventos = req.body.eventos;
   let fecha_inicio = req.body.fecha_inicio;
   let hora_inicio = req.body.hora_inicio;
-  Partido.findOneAndUpdate({ "_id": _id }, { "$set": { "equipos": equipos, "eventos": eventos, "fecha_inicio": fecha_inicio, "hora_inicio": hora_inicio}})
+  Partido.findOneAndUpdate({ "_id": _id }, { "$set": { "fecha_inicio": fecha_inicio, "hora_inicio": hora_inicio }})
     .then(partidos => {
       if(!partidos){ return res.sendStatus(401); }
       return res.json({'partidos': partidos})
@@ -57,5 +55,23 @@ router.delete('/:_id', (req, res) => {
     return res.json({'partidos': partidos})
   })
 });
+
+//DELETE PARTIDO PRUEBA BORRAR PARTIDO Y TODOS SUS EVENTOS
+/*router.delete('/:_id', (req, res) => {
+  let _id = req.params._id;
+  Partido.findByIdAndRemove(_id)
+   .then(partidos => {
+    console.log(partidos.eventos.length());
+    for(let i = 0;i < partidos.eventos.length(); i++)
+    {
+      var index;
+      index = partidos.eventos[i];
+      Evento.findByIdAndRemove(index);
+    }
+    if(!partidos){ return res.sendStatus(401); }
+    return res.json({'partidos': partidos})
+  })
+});
+*/
 
 module.exports=router;

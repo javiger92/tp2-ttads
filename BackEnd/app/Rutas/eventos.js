@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
+var ObjectId = require('mongoose').ObjectID;
 var router = require('express').Router();
 var bodyParser = require('body-parser');
 var Evento = mongoose.model('evento');
@@ -28,7 +28,6 @@ router.get('/:_id', (req, res) => {
 router.post('/', (req, res) => {
   let evento = new Evento(req.body);
   id = req.body.id_partido;
-  console.log(id);
   evento.save()
     .then(Partido.findOne({"_id": id}).then(partido =>{
        if(!partido){ return res.sendStatus(401); }
@@ -43,11 +42,10 @@ router.post('/', (req, res) => {
 //UPDATE EVENTO
 router.put('/:_id', (req, res) => {
   let _id = req.params._id;
-  let partido = req.body.partido;
   let descripcion = req.body.descripcion;
-  let equipo = req.body.equipo;
   let tiempo = req.body.tiempo;
-  Evento.findOneAndUpdate({ "_id": _id }, { "$set": {"partido": partido, "descripcion": descripcion, "equipo": equipo, "tiempo": tiempo }})
+  let tipo = req.body.tipo;
+  Evento.findOneAndUpdate({ "_id": _id }, { "$set": {"descripcion": descripcion,"tiempo": tiempo, "tipo": tipo }})
     .then(eventos => {
       if(!eventos){ return res.sendStatus(401); }
       return res.json({'eventos': eventos})
@@ -58,10 +56,14 @@ router.put('/:_id', (req, res) => {
 router.delete('/:_id', (req, res) => {
   let _id = req.params._id;
   Evento.findByIdAndRemove(_id)
-   .then(eventos => {
-    if(!eventos){ return res.sendStatus(401); }
-    return res.json({'eventos': eventos})
-  })
+   .then(Partido.findOne({"eventos" : _id}).then(partido => {
+    if(!partido){ return res.sendStatus(401); }
+    else{
+        partido.eventos.pull(_id);
+        partido.save();
+        return res.json({'partidos': partido})
+    }
+  }))
 });
 
 module.exports=router;
