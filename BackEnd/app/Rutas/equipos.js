@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var router = require('express').Router();
 var bodyParser = require('body-parser');
 var Equipo = mongoose.model('equipo');
+var Partido = mongoose.model('partido');
 
 // GET ALL EQUIPOS
 router.get('/', (req, res) => {
@@ -25,11 +26,16 @@ router.get('/:_id', (req, res) => {
 // POST EQUIPO
 router.post('/', (req, res) => {
   let instEquipo = new Equipo(req.body);
+  id = req.body.id_partido;
   instEquipo.save()
-    .then(equipos => {
-      if(!equipos){ return res.sendStatus(401); }
-      return res.json({'equipos': equipos})
-  });
+    .then(Partido.findOne({"_id":id}).then(partido=>{
+      if(!partido){return res.sendStatus(401);}
+      else{
+        partido.equipos.push(instEquipo);
+        partido.save();
+        return res.json({"equipos":instEquipo});
+      }
+    }));
 });
 
 //UPDATE EQUIPO
