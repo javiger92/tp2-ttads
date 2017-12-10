@@ -59,4 +59,6 @@ router.delete('/:_id', (req, res) => {
   }))
 });
 
+//DELETE EQUIPO (PRUEBA BORRAR EQUIPO Y TODOS SUS PARTIDOS)
+
 module.exports=router;

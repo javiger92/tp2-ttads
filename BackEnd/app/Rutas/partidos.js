@@ -29,23 +29,25 @@ router.get('/:_id', (req, res) => {
 // POST PARTIDO
 router.post('/', (req, res) => {
   let partido = new Partido(req.body);
+  var flag = 0;
   id1 = req.body.id_equipo1;
   id2 = req.body.id_equipo2;
-  partido.save()
-    .then(Equipo.findOne({"_id": id1}).then(equipo1 =>{
+  Equipo.findOne({"_id": id1}).then(equipo1 =>{
        if(!equipo1){ return res.sendStatus(401); }
        else{
+       flag = 1;
        partido.equipos.push(equipo1);
-       partido.save();
        return res.json({'partido': partido})
      }
-  }))
+  })
   .then(Equipo.findOne({"_id": id2}).then(equipo2 =>{
      if(!equipo2){ return res.sendStatus(401); }
      else{
-     partido.equipos.push(equipo2);
-     partido.save();
-     return res.json({'partido': partido})
+     if(flag === 1){
+       partido.equipos.push(equipo2);
+       partido.save();
+       return res.json({'partido': partido})
+      }
     }
   }));
 });
@@ -63,6 +65,7 @@ router.put('/:_id', (req, res) => {
 });
 
 //DELETE PARTIDO
+
 router.delete('/:_id', (req, res) => {
   let _id = req.params._id;
   Partido.findByIdAndRemove(_id)
@@ -72,12 +75,12 @@ router.delete('/:_id', (req, res) => {
   })
 });
 
-//DELETE PARTIDO PRUEBA BORRAR PARTIDO Y TODOS SUS EVENTOS
-/*router.delete('/:_id', (req, res) => {
+//DELETE PARTIDO (PRUEBA BORRAR PARTIDO Y TODOS SUS EVENTOS)
+/*
+router.delete('/:_id', (req, res) => {
   let _id = req.params._id;
   Partido.findByIdAndRemove(_id)
    .then(partidos => {
-    console.log(partidos.eventos.length());
     for(let i = 0;i < partidos.eventos.length(); i++)
     {
       var index;
