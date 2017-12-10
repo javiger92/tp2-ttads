@@ -30,6 +30,7 @@ router.get('/:_id', (req, res) => {
 router.post('/', (req, res) => {
   let partido = new Partido(req.body);
   id1 = req.body.id_equipo1;
+  id2 = req.body.id_equipo2;
   partido.save()
     .then(Equipo.findOne({"_id": id1}).then(equipo1 =>{
        if(!equipo1){ return res.sendStatus(401); }
@@ -38,6 +39,14 @@ router.post('/', (req, res) => {
        partido.save();
        return res.json({'partido': partido})
      }
+  }))
+  .then(Equipo.findOne({"_id": id2}).then(equipo2 =>{
+     if(!equipo2){ return res.sendStatus(401); }
+     else{
+     partido.equipos.push(equipo2);
+     partido.save();
+     return res.json({'partido': partido})
+    }
   }));
 });
 
