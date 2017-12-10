@@ -28,14 +28,10 @@ router.post('/', (req, res) => {
   let instEquipo = new Equipo(req.body);
   id = req.body.id_partido;
   instEquipo.save()
-    .then(Partido.findOne({"_id":id}).then(partido=>{
-      if(!partido){return res.sendStatus(401);}
-      else{
-        partido.equipos.push(instEquipo);
-        partido.save();
-        return res.json({"equipos":instEquipo});
-      }
-    }));
+     .then(equipos => {
+        if(!equipos){ return res.sendStatus(401); }
+        return res.json({'equipos': equipos})
+  });
 });
 
 //UPDATE EQUIPO
@@ -53,10 +49,14 @@ router.put('/:_id', (req, res) => {
 router.delete('/:_id', (req, res) => {
   let _id = req.params._id;
   Equipo.findByIdAndRemove(_id)
-   .then(equipos => {
-    if(!equipos){ return res.sendStatus(401); }
-    return res.json({'equipos': equipos})
-  })
+   .then(Partido.findOne({"equipos" : _id}).then(partido => {
+    if(!partido){ return res.sendStatus(401); }
+    else{
+        partido.equipos.pull(_id);
+        partido.save();
+        return res.json({'partidos': partido})
+    }
+  }))
 });
 
 module.exports=router;

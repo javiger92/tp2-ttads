@@ -3,11 +3,13 @@ var router = require('express').Router();
 var bodyParser = require('body-parser');
 var Partido = mongoose.model('partido');
 var Evento = mongoose.model('evento');
+var Equipo = mongoose.model('equipo');
 
 // GET ALL PARTIDOS
 router.get('/', (req, res) => {
   Partido.find({})
     .populate('eventos')
+    .populate('equipos')
     .then(partidos => {
       if(!partidos){ return res.sendStatus(401); }
       return res.json({'partidos': partidos})
@@ -26,12 +28,17 @@ router.get('/:_id', (req, res) => {
 
 // POST PARTIDO
 router.post('/', (req, res) => {
-  partido = new Partido(req.body);
+  let partido = new Partido(req.body);
+  id1 = req.body.id_equipo1;
   partido.save()
-    .then(partidos => {
-      if(!partidos){ return res.sendStatus(401); }
-      return res.json({'partidos': partidos})
-  });
+    .then(Equipo.findOne({"_id": id1}).then(equipo1 =>{
+       if(!equipo1){ return res.sendStatus(401); }
+       else{
+       partido.equipos.push(equipo1);
+       partido.save();
+       return res.json({'partido': partido})
+     }
+  }));
 });
 
 //UPDATE PARTIDO
