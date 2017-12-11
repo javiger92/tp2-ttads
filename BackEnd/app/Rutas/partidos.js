@@ -65,32 +65,17 @@ router.put('/:_id', (req, res) => {
 });
 
 //DELETE PARTIDO
-
 router.delete('/:_id', (req, res) => {
-  let _id = req.params._id;
-  Partido.findByIdAndRemove(_id)
+  let id = req.params._id;
+  Partido.findByIdAndRemove(id)
    .then(partidos => {
-    if(!partidos){ return res.sendStatus(401); }
-    return res.json({'partidos': partidos})
-  })
-});
-
-//DELETE PARTIDO (PRUEBA BORRAR PARTIDO Y TODOS SUS EVENTOS)
-/*
-router.delete('/:_id', (req, res) => {
-  let _id = req.params._id;
-  Partido.findByIdAndRemove(_id)
-   .then(partidos => {
-    for(let i = 0;i < partidos.eventos.length(); i++)
-    {
-      var index;
-      index = partidos.eventos[i];
-      Evento.findByIdAndRemove(index);
+    if(!partidos){ return res.sendSatatus(401); }
+    else{
+      Evento.remove({"_id": {"$in" : partidos.eventos}}).then(function(){
+          return res.json({'partidos': partidos});
+      })
     }
-    if(!partidos){ return res.sendStatus(401); }
-    return res.json({'partidos': partidos})
   })
 });
-*/
 
 module.exports=router;

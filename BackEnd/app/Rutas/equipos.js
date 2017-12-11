@@ -47,18 +47,16 @@ router.put('/:_id', (req, res) => {
 
 //DELETE EQUIPO
 router.delete('/:_id', (req, res) => {
-  let _id = req.params._id;
-  Equipo.findByIdAndRemove(_id)
-   .then(Partido.findOne({"equipos" : _id}).then(partido => {
-    if(!partido){ return res.sendStatus(401); }
+  let id = req.params._id;
+  Equipo.findByIdAndRemove(id)
+   .then(Partido.find({"equipos" : id},{"_id" : 1}).then(partidos => {
+    if(!partidos){ return res.sendStatus(401); }
     else{
-        partido.equipos.pull(_id);
-        partido.save();
-        return res.json({'partidos': partido})
+        Partido.remove({"_id" : partidos }).then(function(){
+           return res.json({'partidos': partidos})
+        })
     }
   }))
 });
-
-//DELETE EQUIPO (PRUEBA BORRAR EQUIPO Y TODOS SUS PARTIDOS)
 
 module.exports=router;
