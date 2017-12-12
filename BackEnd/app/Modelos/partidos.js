@@ -10,13 +10,8 @@ var partidoSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'evento'
     }],
-    fecha_inicio:{
-        type:String,
-        required: true
-    },
-    hora_inicio:{
-        type:String,
-        required: true
+    fecha_partido:{
+        type: Date
     },
     create_date:{
         type: Date,

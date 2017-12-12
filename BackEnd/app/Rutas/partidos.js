@@ -18,33 +18,9 @@ router.get('/', (req, res) => {
 
 // GET ALL PARTIDOS FINALIZADOS
 router.get('/finalizados', (req, res) => {
-  var fecha_hoy = new Date();
-  var año = fecha_hoy.getFullYear();
-  var mes = fecha_hoy.getMonth() + 1;
-  var dia = fecha_hoy.getDay();
-  var hora = fecha_hoy.getHours();
-  var minutos = fecha_hoy.getMinutes();
-  var fecha_hoy_str = año + "/" + mes + "/" + dia;
-  if(hora > 9){
-    if(minutos > 9){
-      var horario = hora + ":" + minutos;
-    }
-    else{
-      var horario = hora + ":0" + minutos;
-    }
-  }
-  else{
-    if(minutos > 9){
-      var horario = "0" + hora + ":" + minutos;
-    }
-    else{
-      var horario = "0" + hora + ":0" + minutos;
-    }
-  }
-  Partido.find({ "fecha_inicio": {$lt: fecha_hoy_str} })
+  var fecha_hoy = Date.now();
+  Partido.find({ "fecha_partido": {$lt: fecha_hoy} })
     .then(partidos => {
-      console.log(fecha_hoy_str);
-      console.log(horario);
       if(!partidos){ return res.sendStatus(401); }
       return res.json({'partidos': partidos})
   })
