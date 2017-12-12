@@ -1,3 +1,0 @@
-{ "_id" : 1, "id_partido" : 1, "descripcion" : "gol", "id_equipo" : 1, "tiempo" : "70'" }
-{ "_id" : 2, "id_partido" : 1, "descripcion" : "gol", "id_equipo" : 2, "tiempo" : "40'" }
-{ "_id" : 3, "id_partido" : 1, "descripcion" : "tarjeta amarilla", "id_equipo" : 2, "tiempo" : "20'" }

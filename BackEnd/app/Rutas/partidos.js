@@ -48,7 +48,6 @@ router.post('/', (req, res) => {
        else{
        flag = 1;
        partido.equipos.push(equipo1);
-       return res.json({'partido': partido})
      }
   })
   .then(Equipo.findOne({"_id": id2}).then(equipo2 =>{
@@ -66,9 +65,8 @@ router.post('/', (req, res) => {
 //UPDATE PARTIDO
 router.put('/:_id', (req, res) => {
   let _id = req.params._id;
-  let fecha_inicio = req.body.fecha_inicio;
-  let hora_inicio = req.body.hora_inicio;
-  Partido.findOneAndUpdate({ "_id": _id }, { "$set": { "fecha_inicio": fecha_inicio, "hora_inicio": hora_inicio }})
+  let fecha_partido = req.body.fecha_partido;
+  Partido.findOneAndUpdate({ "_id": _id }, { "$set": { "fecha_partido": fecha_partido }})
     .then(partidos => {
       if(!partidos){ return res.sendStatus(401); }
       return res.json({'partidos': partidos})

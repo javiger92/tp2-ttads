@@ -1,0 +1,17 @@
+DUMP
+
+mongodump --db futbol --collection eventos
+mongodump --db futbol --collection equipos
+mongodump --db futbol --collection partidos
+
+RESTORE
+
+mongorestore --db futbol "/home/javi/tp2-ttads/DataBase/futbol/eventos.bson"
+mongorestore --db futbol "/home/javi/tp2-ttads/DataBase/futbol/equipos.bson"
+mongorestore --db futbol "/home/javi/tp2-ttads/DataBase/futbol/partidos.bson"
+
+DROP DB
+
+mongo
+use futbol
+db.dropDatabase()
