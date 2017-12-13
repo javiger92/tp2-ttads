@@ -20,6 +20,8 @@ router.get('/', (req, res) => {
 router.get('/finalizados', (req, res) => {
   var fecha_hoy = Date.now();
   Partido.find({ "fecha_partido": {$lt: fecha_hoy} })
+    .populate('eventos')
+    .populate('equipos')
     .then(partidos => {
       if(!partidos){ return res.sendStatus(401); }
       return res.json({'partidos': partidos})
@@ -31,6 +33,8 @@ router.get('/finalizados', (req, res) => {
 router.get('/:_id', (req, res) => {
   let _id = req.params._id;
   Partido.findById(_id)
+    .populate('eventos')
+    .populate('equipos')
     .then(partidos => {
       if(!partidos){ return res.sendStatus(401); }
       return res.json({'partidos': partidos})
