@@ -3,14 +3,12 @@
 </div>
 
 <div class="row">
-  <div class="fondo">
-    <div class="col-md-4 col-sd-12">
+    <div class="col-md-10 col-sd-12">
       <h2><span class="label label-default">EVENTOS:</span></h2>
       <ul>
-        <li *ngFor="let eventos of onematch.partidos.eventos">{{ eventos.descripcion }} Hora:{{eventos.tiempo}}</li>
+        <li *ngFor="let eventos of onematch.partidos.eventos">{{ eventos.descripcion }} - Tiempo:{{eventos.tiempo}}</li>
       </ul>
   </div>
-</div>
 </div>
 <div class="row">
   <div class="col-md-1 col-sd-9">
