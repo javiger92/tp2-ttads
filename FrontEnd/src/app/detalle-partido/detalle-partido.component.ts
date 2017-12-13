@@ -9,20 +9,20 @@ import { Location } from '@angular/common';
   styleUrls: ['./detalle-partido.component.css']
 })
 export class DetallePartido implements OnInit{
-  id: number;
-  Partido: any;
+  id: string;
+  onematch: any;
 
   constructor(private route: ActivatedRoute, private service:PartidosService,private location: Location) {}
 
   ngOnInit() {
      this.route.params.subscribe(params => {
-       this.id = +params['id'];
+       this.id = params['_id'];
          });
          this.getDetallePartido(this.id);
   }
 
    getDetallePartido(id){
-     this.service.getDetallePartido(id).subscribe(result => this.Partido=result);
+     this.service.getDetallePartido(id).subscribe(result => this.onematch=result);
    }
 
    goBack(){
