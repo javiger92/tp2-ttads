@@ -1,6 +1,7 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PartidosService } from '../partidos-service/partidos.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'detalle-partido',
@@ -9,9 +10,9 @@ import { PartidosService } from '../partidos-service/partidos.service';
 })
 export class DetallePartido implements OnInit{
   id: number;
-  detallePartido: any;
+  Partido: any;
 
-  constructor(private route: ActivatedRoute, private service:PartidosService) {}
+  constructor(private route: ActivatedRoute, private service:PartidosService,private location: Location) {}
 
   ngOnInit() {
      this.route.params.subscribe(params => {
@@ -21,7 +22,11 @@ export class DetallePartido implements OnInit{
   }
 
    getDetallePartido(id){
-     this.service.getDetallePartido(id).subscribe(result => this.detallePartido=result);
+     this.service.getDetallePartido(id).subscribe(result => this.Partido=result);
+   }
+
+   goBack(){
+     this.location.back();
    }
 
 }

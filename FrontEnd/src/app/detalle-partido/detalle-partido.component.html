@@ -1,6 +1,6 @@
 <div class="row">
-  <h1>FECHA: {{partido.fecha_inicio}}</h1>
-  <h1>HORA: {{partido.hora_inicio}}</h1>
+  <h1>FECHA: {{partido.partidos.fecha_inicio}}</h1>
+  <h1>HORA: {{partidos.partido.hora_inicio}}</h1>
 </div>
 
 <div class="row">
@@ -13,4 +13,9 @@
       <p>1: Evento1</p>
   </div>
 </div>
+</div>
+<div class="row">
+  <div class="col-md-1 col-sd-9">
+    <button type="button" (click)="goBack()">Volver</button>
+  </div>
 </div>

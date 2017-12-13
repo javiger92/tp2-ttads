@@ -7,8 +7,8 @@ import { Observable }     from 'rxjs/Observable';
  export class PartidosService {
   constructor(private http:Http){}
 
-  private listaPartidos:string = "https://localhost:3000/api/partidos";
-  private DetallePartido:string= "https://localhost:3000/api/partidos/";
+  private listaPartidos:string = "http://localhost:3000/api/partidos";
+  private DetallePartido:string= "http://localhost:3000/api/partidos/";
 
  getPartidos(): Observable <any>{
   return this.http.get(this.listaPartidos).map((res:Response) => res.json());
