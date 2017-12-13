@@ -1,12 +1,23 @@
 h1{
   text-align: center;
   margin-bottom: 30px;
+  color: rgb(0, 0, 0);
+  font-size: xx-large;
+
 }
 a{
-  color: rgb(0, 0, 0);
+  color: rgb(252, 252, 252);
   text-align: center;
+
 }
 p{
   font-size: medium;
-  background-color: rgb(205, 205, 205);
+  background-color: rgb(0, 0, 0);
+  border-radius: 66px 66px 66px 66px;
+  -moz-border-radius: 66px 66px 66px 66px;
+  -webkit-border-radius: 66px 66px 66px 66px;
+  border: 0px solid #000000;
+}
+.bloque{
+  background-color:rgb(0, 126, 172) ;
 }

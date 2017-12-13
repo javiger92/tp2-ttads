@@ -1,19 +1,19 @@
 <div class="row">
-  <h1>FECHA: {{ onematch.fecha_partido }}</h1>
+  <h1>{{ onematch.partidos.equipos[0].name}} VS {{ onematch.partidos.equipos[1].name}}</h1>
 </div>
 
 <div class="row">
   <div class="fondo">
     <div class="col-md-4 col-sd-12">
-      <h2><span class="label label-default">EQUIPOS:</span></h2>
-      <p>{{ onematch.equipos }}</p>
       <h2><span class="label label-default">EVENTOS:</span></h2>
-      <p>{{ onematch.eventos }}</p>
+      <ul>
+        <li *ngFor="let eventos of onematch.partidos.eventos">{{ eventos.descripcion }} Hora:{{eventos.tiempo}}</li>
+      </ul>
   </div>
 </div>
 </div>
 <div class="row">
   <div class="col-md-1 col-sd-9">
-    <button type="button" (click)="goBack()">Volver</button>
+    <button type="button" (click)="goBack()" class="btn btn-default">Volver</button>
   </div>
 </div>

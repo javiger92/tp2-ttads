@@ -1,8 +1,14 @@
 <div class="row">
- <h1>PARTIDOS:</h1>
+  <div class="col-md-12">
+    <img src="portada.jpg" alt="">
+  </div>
+</div>
+
+<div class="row">
+ <h1>PARTIDOS EN CURSO:</h1>
   <a *ngFor="let partido of partidos.partidos" [routerLink]="['/detail', partido._id]" >
-    <div class="col-md-3 col-sd-12">
-      <p>{{partido.fecha_partido}}</p>
+    <div class="col-md-offset-4 col-md-4 col-sd-12">
+      <p>{{partido.equipos[0].name}} vs {{partido.equipos[1].name}}</p>
     </div>
   </a>
 </div>
